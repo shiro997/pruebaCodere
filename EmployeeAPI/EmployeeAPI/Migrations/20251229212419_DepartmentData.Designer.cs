@@ -3,6 +3,7 @@ using EmployeeAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251229212419_DepartmentData")]
+    partial class DepartmentData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,146 +142,6 @@ namespace EmployeeAPI.Migrations
                     b.HasIndex("CodeDepartment");
 
                     b.ToTable("Groups");
-
-                    b.HasData(
-                        new
-                        {
-                            CodeGroup = 1,
-                            CodeDepartment = 2,
-                            NameGroup = "Reclutamiento"
-                        },
-                        new
-                        {
-                            CodeGroup = 2,
-                            CodeDepartment = 2,
-                            NameGroup = "Compensación y beneficios"
-                        },
-                        new
-                        {
-                            CodeGroup = 3,
-                            CodeDepartment = 2,
-                            NameGroup = "Capacitación"
-                        },
-                        new
-                        {
-                            CodeGroup = 4,
-                            CodeDepartment = 2,
-                            NameGroup = "Relaciones Laborales"
-                        },
-                        new
-                        {
-                            CodeGroup = 5,
-                            CodeDepartment = 2,
-                            NameGroup = "Nominas"
-                        },
-                        new
-                        {
-                            CodeGroup = 6,
-                            CodeDepartment = 2,
-                            NameGroup = "Gestión de desempeño"
-                        },
-                        new
-                        {
-                            CodeGroup = 7,
-                            CodeDepartment = 3,
-                            NameGroup = "Contabilidad"
-                        },
-                        new
-                        {
-                            CodeGroup = 8,
-                            CodeDepartment = 3,
-                            NameGroup = "Tesorería"
-                        },
-                        new
-                        {
-                            CodeGroup = 9,
-                            CodeDepartment = 3,
-                            NameGroup = "Planificación"
-                        },
-                        new
-                        {
-                            CodeGroup = 10,
-                            CodeDepartment = 3,
-                            NameGroup = "Gestión de riesgo"
-                        },
-                        new
-                        {
-                            CodeGroup = 11,
-                            CodeDepartment = 3,
-                            NameGroup = "Impuestos"
-                        },
-                        new
-                        {
-                            CodeGroup = 12,
-                            CodeDepartment = 4,
-                            NameGroup = "Marketing digital"
-                        },
-                        new
-                        {
-                            CodeGroup = 13,
-                            CodeDepartment = 4,
-                            NameGroup = "Estrategia de marca"
-                        },
-                        new
-                        {
-                            CodeGroup = 14,
-                            CodeDepartment = 4,
-                            NameGroup = "Redes sociales"
-                        },
-                        new
-                        {
-                            CodeGroup = 15,
-                            CodeDepartment = 5,
-                            NameGroup = "Ventas"
-                        },
-                        new
-                        {
-                            CodeGroup = 16,
-                            CodeDepartment = 6,
-                            NameGroup = "Producción"
-                        },
-                        new
-                        {
-                            CodeGroup = 17,
-                            CodeDepartment = 8,
-                            NameGroup = "Infraestructura y redes"
-                        },
-                        new
-                        {
-                            CodeGroup = 18,
-                            CodeDepartment = 8,
-                            NameGroup = "Ciber seguridad"
-                        },
-                        new
-                        {
-                            CodeGroup = 19,
-                            CodeDepartment = 8,
-                            NameGroup = "Desarrollo e I+D"
-                        },
-                        new
-                        {
-                            CodeGroup = 20,
-                            CodeDepartment = 8,
-                            NameGroup = "Soporte y helpdesk"
-                        },
-                        new
-                        {
-                            CodeGroup = 21,
-                            CodeDepartment = 8,
-                            NameGroup = "Data"
-                        },
-                        new
-                        {
-                            CodeGroup = 22,
-                            CodeDepartment = 8,
-                            NameGroup = "Gestión de proyectos"
-                        },
-                        new
-                        {
-                            CodeGroup = 23,
-                            CodeDepartment = 9,
-                            NameGroup = "Atención al cliente"
-                        });
                 });
 
             modelBuilder.Entity("EmployeeAPI.Model.Employee", b =>

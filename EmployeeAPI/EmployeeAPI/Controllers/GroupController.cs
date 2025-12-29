@@ -1,4 +1,5 @@
-﻿using EmployeeAPI.Data;
+﻿using AutoMapper;
+using EmployeeAPI.Data;
 using EmployeeAPI.Implementation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,10 @@ namespace EmployeeAPI.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IGroupImpl _group;
-        public GroupController(AppDbContext con)
+        public GroupController(AppDbContext con, IMapper mapper)
         {
             _context = con;
-            _group = new GroupImpl(_context);
+            _group = new GroupImpl(_context,mapper);
         }
 
         // GET: GroupController

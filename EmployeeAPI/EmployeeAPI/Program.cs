@@ -2,6 +2,7 @@ using EmployeeAPI.Data;
 using EmployeeAPI.Implementation;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 //Add dbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -12,6 +13,9 @@ builder.Services.AddScoped<IEmployeeData, EmployeeData>().AddScoped<IGroupData, 
 
 //inyección capa de reglas de negocio
 builder.Services.AddScoped<IEmployeeImpl, EmployeeImpl>().AddScoped<IGroupImpl, GroupImpl>().AddScoped<IDepartmentImpl, DepartmentImpl>();
+
+//Add Automapper 
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Add services to the container.
 

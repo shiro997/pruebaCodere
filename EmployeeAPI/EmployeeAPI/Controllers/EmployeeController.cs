@@ -1,4 +1,5 @@
-﻿using EmployeeAPI.Data;
+﻿using AutoMapper;
+using EmployeeAPI.Data;
 using EmployeeAPI.DTO;
 using EmployeeAPI.Implementation;
 using Microsoft.AspNetCore.Http;
@@ -14,10 +15,10 @@ namespace EmployeeAPI.Controllers
         private readonly AppDbContext _context;
         private readonly IEmployeeImpl _employeeImpl;
 
-        public EmployeeController(AppDbContext con)
+        public EmployeeController(AppDbContext con,IMapper mapper)
         {
             _context = con;
-            _employeeImpl = new EmployeeImpl(_context);
+            _employeeImpl = new EmployeeImpl(_context, mapper);
         }
 
         // GET: EmployeeController

@@ -7,9 +7,13 @@ namespace EmployeeAPI.Implementation
     public class DepartmentImpl : IDepartmentImpl
     {
         private readonly IDepartmentData _departmentData;
-        public DepartmentImpl(AppDbContext context)
+        private readonly IMapper _mapper;
+
+
+        public DepartmentImpl(AppDbContext context, IMapper mapper)
         {
             _departmentData = new DepartmentData(context);
+            _mapper = mapper;
         }
 
         public async Task<List<DepartmentDTO>> GetAllDepartmentsAsync()
@@ -18,7 +22,7 @@ namespace EmployeeAPI.Implementation
             var data = await _departmentData.GetAllDepartmentsAsync();
             foreach (var  d in data)
             {
-                var dep = Mapper.Map<DepartmentDTO>(d);
+                var dep = _mapper.Map<DepartmentDTO>(d);
                 departments.Add(dep);
             }
             return departments;
@@ -26,7 +30,7 @@ namespace EmployeeAPI.Implementation
         public async Task<DepartmentDTO> GetDepartmentByIdAsync(int codeDepartment)
         {
             var data = await _departmentData.GetDepartmentByIdAsync(codeDepartment);
-            var department = Mapper.Map<DepartmentDTO>(data);
+            var department = _mapper.Map<DepartmentDTO>(data);
             return department;
         }   
     }

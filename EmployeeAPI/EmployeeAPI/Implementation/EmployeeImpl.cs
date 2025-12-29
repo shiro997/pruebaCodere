@@ -8,10 +8,12 @@ namespace EmployeeAPI.Implementation
     public class EmployeeImpl: IEmployeeImpl
     {
         private readonly IEmployeeData _employeeData;
+        private readonly IMapper _mapper;
 
-        public EmployeeImpl(AppDbContext context)
+        public EmployeeImpl(AppDbContext context, IMapper mapper)
         {
             _employeeData = new EmployeeData(context);
+            _mapper = mapper;
         }
 
         public async Task<List<EmployeeDTO>>GetEmployeeDTOsAsync()
@@ -20,7 +22,7 @@ namespace EmployeeAPI.Implementation
             var data = await _employeeData.GetAllEmployeesAsync();
             foreach (var emp in data)
             {
-                var e = Mapper.Map<EmployeeDTO>(emp);
+                var e = _mapper.Map<EmployeeDTO>(emp);
                 employees.Add(e);
             }
             return employees;
@@ -29,7 +31,7 @@ namespace EmployeeAPI.Implementation
         public async Task<EmployeeDTO> GetEmployeeDTOByIdAsync(int codeEmployee)
         {
             var emp = await _employeeData.GetEmployeeByIdAsync(codeEmployee);
-            var e = Mapper.Map<EmployeeDTO>(emp);
+            var e = _mapper.Map<EmployeeDTO>(emp);
             return e;
         }
 
@@ -39,7 +41,7 @@ namespace EmployeeAPI.Implementation
             var data = await _employeeData.GetEmployeesByGroup(codeGroup);
             foreach (var emp in data)
             {
-                var e = Mapper.Map<EmployeeDTO>(emp);
+                var e = _mapper.Map<EmployeeDTO>(emp);
                 employees.Add(e);
             }
             return employees;
@@ -49,7 +51,7 @@ namespace EmployeeAPI.Implementation
         {
             try 
             {
-                var emp = Mapper.Map<Employee>(employeeDTO);
+                var emp = _mapper.Map<Employee>(employeeDTO);
                 var status = await _employeeData.AddEmployeeAsync(emp);
                 if (status == 0) 
                 {
@@ -78,7 +80,7 @@ namespace EmployeeAPI.Implementation
                 {
                     throw new KeyNotFoundException("Employee not found");
                 }
-                var empN = Mapper.Map<Employee>(employeeDTO);
+                var empN = _mapper.Map<Employee>(employeeDTO);
                 await _employeeData.UpdateEmployeeAsync(empN);
                 return !emp.Equals(empN);
             }

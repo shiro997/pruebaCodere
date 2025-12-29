@@ -1,4 +1,5 @@
-﻿using EmployeeAPI.Data;
+﻿using AutoMapper;
+using EmployeeAPI.Data;
 using EmployeeAPI.Implementation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,10 @@ namespace EmployeeAPI.Controllers
         private readonly AppDbContext _context;
         private readonly IDepartmentImpl _department;
 
-        public DepartmentController(AppDbContext con)
+        public DepartmentController(AppDbContext con,IMapper mapper)
         {
             _context = con;
-            _department = new DepartmentImpl(_context);
+            _department = new DepartmentImpl(_context, mapper);
         }
 
         // GET: HomeController

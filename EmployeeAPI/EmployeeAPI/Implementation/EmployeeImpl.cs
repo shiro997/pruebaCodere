@@ -5,13 +5,13 @@ using EmployeeAPI.Model;
 
 namespace EmployeeAPI.Implementation
 {
-    public class EmployeeImpl
+    public class EmployeeImpl: IEmployeeImpl
     {
-        private readonly EmployeeData _employeeData;
+        private readonly IEmployeeData _employeeData;
 
-        public EmployeeImpl(EmployeeData data)
+        public EmployeeImpl(AppDbContext context)
         {
-            _employeeData = data;
+            _employeeData = new EmployeeData(context);
         }
 
         public async Task<List<EmployeeDTO>>GetEmployeeDTOsAsync()
@@ -45,10 +45,64 @@ namespace EmployeeAPI.Implementation
             return employees;
         }
 
-        public async Task AddEmployeeDTOAsync(EmployeeDTO employeeDTO)
+        public async Task<EmployeeDTO> AddEmployeeDTOAsync(EmployeeDTO employeeDTO)
         {
-            var emp = Mapper.Map<Employee>(employeeDTO);
-            await _employeeData.AddEmployeeAsync(emp);
+            try 
+            {
+                var emp = Mapper.Map<Employee>(employeeDTO);
+                var status = await _employeeData.AddEmployeeAsync(emp);
+                if (status == 0) 
+                {
+                    throw new ApplicationException("The provided employee can not be saved");
+                }
+                return employeeDTO;
+
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
+
+        }
+
+        public async Task<bool> UpdateEmployeeDTOAsync(int codeEmployee, EmployeeDTO employeeDTO)
+        {
+            try 
+            {
+                if (codeEmployee == 0) 
+                {
+                    throw new ArgumentNullException("CodeEmployee is null or zero");
+                }
+                var emp = await _employeeData.GetEmployeeByIdAsync(codeEmployee);
+                if (emp == null) 
+                {
+                    throw new KeyNotFoundException("Employee not found");
+                }
+                var empN = Mapper.Map<Employee>(employeeDTO);
+                await _employeeData.UpdateEmployeeAsync(empN);
+                return !emp.Equals(empN);
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<bool> DeleteEmployeeDTOAsync(int id)
+        {
+            try 
+            {
+                if (id == 0) 
+                {
+                    throw new ArgumentNullException("CodeEmployee is null or zero");
+                }
+                
+                return await _employeeData.DeleteEmployeeAsync(id)>0;
+            } 
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
         }
     }
 }

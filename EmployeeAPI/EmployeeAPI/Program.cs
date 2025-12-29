@@ -1,10 +1,17 @@
 using EmployeeAPI.Data;
+using EmployeeAPI.Implementation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 //Add dbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MSsql")));
+
+//inyección capa de datos
+builder.Services.AddScoped<IEmployeeData, EmployeeData>().AddScoped<IGroupData, GroupData>().AddScoped<IDepartmentData, DepartmentData>();
+
+//inyección capa de reglas de negocio
+builder.Services.AddScoped<IEmployeeImpl, EmployeeImpl>().AddScoped<IGroupImpl, GroupImpl>().AddScoped<IDepartmentImpl, DepartmentImpl>();
 
 // Add services to the container.
 

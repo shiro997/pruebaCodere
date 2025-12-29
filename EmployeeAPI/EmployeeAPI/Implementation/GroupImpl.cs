@@ -4,13 +4,13 @@ using EmployeeAPI.DTO;
 
 namespace EmployeeAPI.Implementation
 {
-    public class GroupImpl
+    public class GroupImpl : IGroupImpl
     {
-        private readonly GroupData _groupData;
+        private readonly IGroupData _groupData;
 
-        public GroupImpl(GroupData groupData)
+        public GroupImpl(AppDbContext context)
         {
-            _groupData = groupData;
+            _groupData = new GroupData(context);
         }
 
         public async Task<List<GroupDTO>> GetAllGroupsAsync()

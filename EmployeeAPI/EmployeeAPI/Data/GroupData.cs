@@ -3,13 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPI.Data
 {
-    public class GroupData
+    public class GroupData : IGroupData
     {
         private readonly AppDbContext _context;
         public GroupData(AppDbContext context)
         {
             _context = context;
         }
+
         public async Task<List<Group>> GetAllGroupsAsync()
         {
             try
@@ -21,6 +22,7 @@ namespace EmployeeAPI.Data
                 throw new Exception("Error retrieving groups, " + ex.Message, ex);
             }
         }
+
         public async Task<Group> GetGroupByIdAsync(int codeGroup)
         {
             try

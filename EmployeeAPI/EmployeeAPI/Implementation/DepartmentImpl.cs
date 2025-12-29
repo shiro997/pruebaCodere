@@ -4,12 +4,12 @@ using EmployeeAPI.DTO;
 
 namespace EmployeeAPI.Implementation
 {
-    public class DepartmentImpl
+    public class DepartmentImpl : IDepartmentImpl
     {
-        private readonly DepartmentData _departmentData;
-        public DepartmentImpl(DepartmentData departmentData)
+        private readonly IDepartmentData _departmentData;
+        public DepartmentImpl(AppDbContext context)
         {
-            _departmentData = departmentData;
+            _departmentData = new DepartmentData(context);
         }
 
         public async Task<List<DepartmentDTO>> GetAllDepartmentsAsync()

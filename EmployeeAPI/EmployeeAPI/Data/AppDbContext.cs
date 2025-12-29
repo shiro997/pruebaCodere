@@ -13,6 +13,7 @@ namespace EmployeeAPI.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Employee>().HasKey(e => e.CodeEmployee);
             modelBuilder.Entity<Employee>()
                 .HasOne(e => e.Leader)
                 .WithMany()
@@ -20,7 +21,10 @@ namespace EmployeeAPI.Data
                 .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Employee>()
                 .Property(e => e.Salary)
-                .HasColumnType("decimal(18,2)"); 
+                .HasColumnType("decimal(18,2)");
+
+
+            modelBuilder.Entity<Group>().HasKey(g => g.CodeGroup);
             modelBuilder.Entity<Group>()
                 .HasMany(g => g.Employees)
                 .WithOne(e => e.Group)
@@ -29,6 +33,9 @@ namespace EmployeeAPI.Data
                 .HasOne(g => g.Department)
                 .WithMany()
                 .HasForeignKey(g => g.CodeDepartment);
-        }   
+            
+            
+            modelBuilder.Entity<Department>().HasKey(d => d.CodeDepartment);
+        }
     }
 }

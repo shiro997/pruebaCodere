@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPI.Data
 {
-    public class DepartmentData
+    public class DepartmentData : IDepartmentData
     {
         private readonly AppDbContext _context;
 

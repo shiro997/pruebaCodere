@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeAPI.Data
 {
-    public class EmployeeData
+    public class EmployeeData : IEmployeeData
     {
         private readonly AppDbContext _context;
         public EmployeeData(AppDbContext context)
@@ -50,12 +50,16 @@ namespace EmployeeAPI.Data
             }   
         }
 
-        public async Task AddEmployeeAsync(Employee employee)
+        public async Task<int> AddEmployeeAsync(Employee employee)
         {
             try
             {
                 await _context.Employees.AddAsync(employee);
-                await _context.SaveChangesAsync();
+                return await _context.SaveChangesAsync();
+            }
+            catch (InvalidDataException exs)
+            {
+                throw new InvalidDataException("Error adding employee, " + exs.Message, exs);
             }
             catch (Exception ex)
             {
@@ -63,12 +67,12 @@ namespace EmployeeAPI.Data
             }
         }
 
-        public async Task UpdateEmployeeAsync(Employee employee)
+        public async Task<int> UpdateEmployeeAsync(Employee employee)
         {
             try
             {
                 _context.Employees.Update(employee);
-                await _context.SaveChangesAsync();
+                return await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -76,16 +80,17 @@ namespace EmployeeAPI.Data
             }
         }
 
-        public async Task DeleteEmployeeAsync(int codeEmployee)
+        public async Task<int> DeleteEmployeeAsync(int codeEmployee)
         {
             try
             {
                 var employee = await GetEmployeeByIdAsync(codeEmployee);
-                if (employee != null)
+                if (employee == null)
                 {
-                    _context.Employees.Remove(employee);
-                    await _context.SaveChangesAsync();
+                    throw new KeyNotFoundException("Employee not found");
                 }
+                _context.Employees.Remove(employee);
+                return await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {

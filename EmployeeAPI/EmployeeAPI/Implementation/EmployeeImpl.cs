@@ -8,11 +8,13 @@ namespace EmployeeAPI.Implementation
     public class EmployeeImpl: IEmployeeImpl
     {
         private readonly IEmployeeData _employeeData;
+        private readonly IGroupData _groupData;
         private readonly IMapper _mapper;
 
         public EmployeeImpl(AppDbContext context, IMapper mapper)
         {
             _employeeData = new EmployeeData(context);
+            _groupData = new GroupData(context);
             _mapper = mapper;
         }
 
@@ -22,6 +24,8 @@ namespace EmployeeAPI.Implementation
             var data = await _employeeData.GetAllEmployeesAsync();
             foreach (var emp in data)
             {
+                var gData = await _groupData.GetGroupByIdAsync(emp.CodeGroup);
+                emp.Group = gData;
                 var e = _mapper.Map<EmployeeDTO>(emp);
                 employees.Add(e);
             }

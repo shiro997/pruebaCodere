@@ -5,37 +5,50 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Código Empleado</th>
+            <th scope="col">Nombre Empleado</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Salario</th>
+            <th scope="col">Grupo</th>
+            <th scope="col">Jefe inmediato</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>John</td>
-            <td>Doe</td>
-            <td>@social</td>
+          <tr *ngFor="let employee of employees">
+            <td>{{employee.codeEmployee}}</td>
+            <td>{{employee.nameEmployee}}</td>
+            <td>{{employee.jobTitle}}</td>
+            <td>${{employee.salary}}COP</td>
+            <td>{{employee.nameGroup}}</td>
+            <td>{{employee.nameLeader}}</td>
+            <td>
+              <div class="row">
+                <div class="icon" style="color:rgb(109, 203, 235); width: 30%;"(click)="editarInfo(employee)"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                    height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                    <path
+                      d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
+                  </svg>
+                </div>
+                <div class="icon" style="color: red; width: 30%">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path
+                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0">
+                    </path>
+                  </svg>
+                </div>
+              </div>
+
+
+            </td>
           </tr>
         </tbody>
       </table>
 
     </div>
     <div class="col-xl-6">
-      <app-employee-form></app-employee-form>
+      <app-employee-form id="employeeForm" [Groups]="groups" [employee]="formEmployeeValue" [Employees]="employees"></app-employee-form>
     </div>
   </div>
 

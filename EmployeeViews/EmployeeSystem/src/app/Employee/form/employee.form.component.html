@@ -33,9 +33,9 @@
     </select>
   </div>
   <div class="col-12" *ngIf="!employee">
-    <button type="submit" class="btn btn-primary">Crear Empleado</button>
+    <button type="submit" class="btn btn-primary" (click)="createEmployee()">Crear Empleado</button>
   </div>
   <div class="col-12" *ngIf="employee">
-    <button type="submit" class="btn btn-primary">Editar Empleado</button>
+    <button type="submit" class="btn btn-primary" (click)="updateEmployee()">Editar Empleado</button>
   </div>
 </form>

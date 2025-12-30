@@ -20,4 +20,21 @@ export class EmployeeService{
     let url = `${this.env.urlSecurity}/api/v1/Employee`;
     return this.http.get<Employee[]>(url,{headers:this.headers});
   }
+
+  createEmployee(employee:Employee):Observable<Employee>{
+    let url = `${this.env.urlSecurity}/api/v1/Employee`;
+    let body = JSON.stringify(employee)
+    return this.http.post<Employee>(url,body,{headers:this.headers})
+  }
+
+  updateEmployee(employee:Employee):Observable<Boolean>{
+    let url = `${this.env.urlSecurity}/api/v1/Employee/${employee.codeEmployee}`;
+    let body = JSON.stringify(employee)
+    return this.http.put<Boolean>(url,body,{headers:this.headers});
+  }
+
+  deleteEmployee(codeEmployee:number):Observable<Boolean>{
+    let url = `${this.env.urlSecurity}/api/v1/Employee/${codeEmployee}`;
+    return this.http.delete<Boolean>(url,{headers:this.headers});
+  }
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Employee } from 'src/app/models/employee';
 import { Group } from 'src/app/models/group';
+import { EventEmployee } from 'src/app/models/utils/eventEmployee';
 
 @Component({
   selector: 'app-employee-form',
@@ -11,10 +12,10 @@ import { Group } from 'src/app/models/group';
 })
 export class EmployeeFormComponent {
   @Input() Groups: Group[] = [];
-  @Input() employee!: Employee;
+  @Input() employee?: Employee;
   @Input() Employees: Employee[] =[];
 
-  @Output() newItemEvent = new EventEmitter<Employee>();
+  @Output() newItemEvent = new EventEmitter<EventEmployee>();
 
   frmEmployee: FormGroup;
 
@@ -22,9 +23,9 @@ export class EmployeeFormComponent {
     this.frmEmployee = this.frmBuilder.group({
       nameEmployee: ['', Validators.required],
       codeGroup: [0, Validators.required],
-      salary: [0, Validators.required],
+      salary: ['', Validators.required],
       jobTitle: ['', Validators.required],
-      codeLeader: [0,Validators.required]
+      codeLeader: [0]
     });
   }
 
@@ -37,10 +38,46 @@ export class EmployeeFormComponent {
         codeGroup: [this.employee.codeGroup, Validators.required],
         salary: [this.employee.salary, Validators.required],
         jobTitle: [this.employee.jobTitle, Validators.required],
-        codeLeader: [this.employee.codeLeader, Validators.required]
+        codeLeader: [this.employee.codeLeader]
       });
       console.info(this.frmEmployee.value);
     }
 
+  }
+
+  resetForm(){
+    this.frmEmployee = this.frmBuilder.group({
+      nameEmployee: ['', Validators.required],
+      codeGroup: [0, Validators.required],
+      salary: ['', Validators.required],
+      jobTitle: ['', Validators.required],
+      codeLeader: [0]
+    });
+  }
+
+  createEmployee(){
+    let newEmployeeTMP = this.frmEmployee.value;
+    let newEmployee = new Employee();
+    newEmployee = newEmployeeTMP;
+    
+    let numericCodeGroup = parseInt(newEmployeeTMP.codeGroup);
+    newEmployee.codeGroup = numericCodeGroup;
+    let ev = new EventEmployee();
+    ev.isUpdate = false;
+    ev.employee = newEmployee
+    this.newItemEvent.emit(ev);
+    this.resetForm();
+  }
+
+  updateEmployee(){
+    let ev = new EventEmployee();
+    let formValue = this.frmEmployee.value;
+    ev.employee = formValue;
+    let numericCodeGroup = parseInt(formValue.codeGroup);
+    ev.employee.codeGroup = numericCodeGroup;
+    ev.isUpdate = true;
+    this.newItemEvent.emit(ev);
+    this.employee = undefined;
+    this.resetForm();
   }
 }

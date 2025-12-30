@@ -53,17 +53,11 @@ namespace EmployeeAPI.Migrations
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CodeGroup = table.Column<int>(type: "int", nullable: false),
-                    CodeLeader = table.Column<int>(type: "int", nullable: false)
+                    CodeLeader = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.CodeEmployee);
-                    table.ForeignKey(
-                        name: "FK_Employees_Employees_CodeLeader",
-                        column: x => x.CodeLeader,
-                        principalTable: "Employees",
-                        principalColumn: "CodeEmployee",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Employees_Groups_CodeGroup",
                         column: x => x.CodeGroup,

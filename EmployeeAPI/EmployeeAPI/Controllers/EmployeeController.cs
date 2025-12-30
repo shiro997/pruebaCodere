@@ -69,7 +69,6 @@ namespace EmployeeAPI.Controllers
 
         // POST: EmployeeController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromBody] EmployeeDTO employee)
         {
             try
@@ -101,7 +100,6 @@ namespace EmployeeAPI.Controllers
 
         // POST: EmployeeController/Delete/5
         [HttpDelete("{id}")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
             try

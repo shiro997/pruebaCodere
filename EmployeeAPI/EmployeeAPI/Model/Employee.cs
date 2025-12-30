@@ -1,4 +1,6 @@
-﻿namespace EmployeeAPI.Model
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace EmployeeAPI.Model
 {
     public class Employee
     {
@@ -8,6 +10,7 @@
         public decimal Salary { get; set; } 
         public int CodeGroup { get; set; }
         public Group Group { get; set; }
+        [AllowNull]
         public int CodeLeader { get; set; }
         public Employee Leader { get; set; }    
     }

@@ -71,7 +71,13 @@ namespace EmployeeAPI.Data
         {
             try
             {
-                _context.Employees.Update(employee);
+                var updatedEmployee =await _context.Employees.FindAsync(employee.CodeEmployee);
+                updatedEmployee.NameEmployee = employee.NameEmployee;
+                updatedEmployee.JobTitle = employee.JobTitle;
+                updatedEmployee.Salary = employee.Salary;
+                updatedEmployee.CodeGroup = employee.CodeGroup;
+                updatedEmployee.CodeLeader = employee.CodeLeader;
+
                 return await _context.SaveChangesAsync();
             }
             catch (Exception ex)
